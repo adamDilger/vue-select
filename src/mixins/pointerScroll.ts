@@ -1,6 +1,6 @@
 import { watch, ref, Ref } from 'vue';
 
-export default function(dropdownMenu: Ref<HTMLSelectElement>, typeAheadPointer: number) {
+export default function(dropdownMenu: Ref<HTMLUListElement>, typeAheadPointer: Ref<number>) {
   const autoscroll = ref<boolean>(true);
 
   /**
@@ -10,7 +10,7 @@ export default function(dropdownMenu: Ref<HTMLSelectElement>, typeAheadPointer: 
    * @returns {*}
    */
   function maybeAdjustScroll(): number | undefined {
-    const optionEl = dropdownMenu.value?.children[typeAheadPointer] as HTMLOptionElement;
+    const optionEl = dropdownMenu.value?.children[typeAheadPointer.value] as HTMLOptionElement;
 
     if (optionEl) {
       const bounds = getDropdownViewport();

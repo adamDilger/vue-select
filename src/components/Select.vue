@@ -81,9 +81,10 @@
   </div>
 </template>
 
-<script type="text/babel">
+<script lang="ts">
+  import { defineComponent, ref } from 'vue';
   import pointerScroll from '../mixins/pointerScroll'
-  import typeAheadPointer from '../mixins/typeAheadPointer'
+  import useTypeAheadPointer from '../mixins/typeAheadPointer'
   import ajax from '../mixins/ajax'
   import childComponents from './childComponents';
   import appendToBody from '../directives/appendToBody';
@@ -93,12 +94,40 @@
   /**
    * @name VueSelect
    */
-  export default {
+  export default defineComponent({
     components: {...childComponents},
 
-    mixins: [pointerScroll, typeAheadPointer, ajax],
+    setup(props, context) {
+      const dropdownMenu = ref();
+      const search = ref<string>('');
+      const loading = ref<boolean>(false);
 
-    directives: {appendToBody},
+      const {
+        typeAheadPointer,
+        typeAheadDown,
+        typeAheadUp,
+        typeAheadSelect
+      } = useTypeAheadPointer([], () => null, () => null);
+
+      const { autoscroll } = pointerScroll(dropdownMenu, typeAheadPointer);
+      const { mutableLoading } =  ajax(context.emit, loading, search);
+
+      return {
+        dropdownMenu,
+
+
+        autoscroll,
+
+        typeAheadPointer,
+        typeAheadDown,
+        typeAheadUp,
+        typeAheadSelect,
+
+        mutableLoading,
+      }
+    },
+
+    // directives: {appendToBody},
 
     emits: [
       'open', 'close',
@@ -1200,5 +1229,5 @@
       },
     },
 
-  }
+  });
 </script>

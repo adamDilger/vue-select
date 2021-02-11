@@ -7,7 +7,7 @@ const baseWebpackConfig = require('./webpack.base.conf');
  *
  */
 module.exports = merge(baseWebpackConfig, {
-  entry: './dev/dev.js',
+  entry: './dev/dev.ts',
   plugins: [
     new HtmlWebpackPlugin({
       template: './dev/dev.html',

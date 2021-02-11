@@ -1,11 +1,11 @@
-import { watch, Ref, ref } from 'vue';
+import { watch, Ref, ref, SetupContext } from 'vue';
 
 /**
  * Toggles the adding of a 'loading' class to the main
  * .v-select wrapper. Useful to control UI state when
  * results are being processed through AJAX.
  */
-export default function(context: any, loading: Ref<boolean>, search: Ref<string>) {
+export default function(emit: Function, loading: Ref<boolean>, search: Ref<string>) {
 
   const mutableLoading = ref<boolean>(false);
 
@@ -18,7 +18,7 @@ export default function(context: any, loading: Ref<boolean>, search: Ref<string>
    *
    * @emits search
    */
-  watch(search, (val) => context.emit('search', val, toggleLoading));
+  watch(search, (val) => emit('search', val, toggleLoading));
 
   /**
    * Sync the loading prop with the internal
