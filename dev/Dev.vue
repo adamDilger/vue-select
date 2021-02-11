@@ -4,20 +4,23 @@
   </div>
 </template>
 
-<script>
-import vSelect from "../src/components/Select";
+<script lang="ts">
+import { defineComponent } from 'vue';
+import vSelect from "../src/components/Select.vue";
 import countries from "../docs/.vuepress/data/countryCodes";
 import books from "../docs/.vuepress/data/books";
 
-export default {
+export default defineComponent({
   components: { vSelect },
-  data: () => ({
-    selected: null,
-    config: {
-      options: countries
+  setup() {
+    return {
+      selected: null,
+      config: {
+        options: countries
+      }
     }
-  })
-};
+  },
+});
 </script>
 
 <style>

@@ -22,7 +22,7 @@ module.exports = {
   },
   devtool,
   resolve: {
-    extensions: ['.js', '.vue'],
+    extensions: ['.ts', '.js', '.vue'],
     alias: {
       'src': path.resolve(__dirname, '../src'),
       'assets': path.resolve(__dirname, '../docs/assets'),
@@ -38,10 +38,12 @@ module.exports = {
         loader: 'vue-loader',
       },
       {
-        test: /\.js$/,
-        loader: 'babel-loader',
-        include: path.resolve(__dirname, '../'),
+        test: /\.js?$|\.ts?$/,
+        loader: 'ts-loader',
         exclude: /node_modules/,
+        options: {
+          appendTsSuffixTo: [/\.vue$/],
+        }
       },
       {
         test: /\.s?css$/,
